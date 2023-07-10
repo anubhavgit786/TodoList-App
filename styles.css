@@ -1,0 +1,237 @@
+*
+{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+body
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-image: url('./assets/images/nature.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.list
+{
+    position: relative;
+    background-color: #fff;
+    width: 770px;
+}
+
+.list header
+{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #fff;
+    padding: 10px 20px;
+    font-weight: 600;
+    /*background-image: url('./assets/images/nature.jpg');
+    background-repeat: no-repeat, no-repeat;
+    background-size: cover;*/
+    background-color: #273c75;
+}
+
+.list header h2
+{
+    text-transform: uppercase;
+}
+
+.list header div
+{
+    cursor: pointer;
+}
+
+.list .groupInputs
+{
+    padding-left: 20px;
+    padding-right: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 150px;
+    background-image: url('./assets/images/nature.jpg');
+    background-repeat: no-repeat, no-repeat;
+    background-size: cover;
+}
+
+.list .groupInputs input
+{
+    height: 28%;
+    border: none;
+    outline: none;
+    font-size: x-large;
+    font-weight: 600;
+    text-transform: capitalize;
+    box-shadow: 0px 0px 6px 4px #2f3640;
+}
+
+.list .groupInputs input:nth-child(1)
+{
+    width: 60%;
+}
+
+.list .groupInputs input:nth-child(2)
+{
+    width: 20%;
+    background-color: #273c75;
+    color: #fff;
+    cursor: pointer;
+}
+
+.list ul
+{
+    position: relative;
+    padding: 20px;
+    max-height: 300px; /* Set a maximum height for the list */
+    overflow-y: auto; /* Add vertical scrollbar when needed */
+}
+
+::-webkit-scrollbar
+{
+    width: 0;
+    background-color: transparent;
+}
+
+.list ul.show-scrollbar::-webkit-scrollbar
+{
+    width: 6px;
+} 
+
+.list ul.show-scrollbar::-webkit-scrollbar-track
+{
+    background-color: #FFF;
+}
+
+.list ul.show-scrollbar::-webkit-scrollbar-thumb
+{
+    background-color: #273c75;
+    border-radius: 5px;
+}
+
+.list ul li
+{
+    position: relative;
+    list-style: none;
+    padding: 15px 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.list ul li:last-child
+{
+    border-bottom: none;
+}
+
+.list ul li label
+{
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+}
+
+.list ul li label input
+{
+    visibility: hidden;
+    appearance: none;
+}
+
+.list ul li label div.description
+{
+    font-size: larger;
+    text-transform: capitalize;
+    width: 60%;
+    position: absolute;
+    left: 0;
+}
+
+.list ul li label div.trash
+{
+    position: relative;
+    left: 160px;
+    display: none;
+}
+
+.list ul li label div.tick
+{
+    color: #dfe6e9;
+}
+
+.list ul li label input:checked ~div.description
+{
+    text-decoration: line-through;
+}
+
+.list ul li label input:checked ~div.tick
+{
+    color: #2c3e50;
+}
+
+.list ul li label input:checked ~div.trash
+{
+    display: block;
+}
+
+footer
+{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-image: url('./assets/images/nature.jpg');
+    background-repeat: no-repeat, no-repeat;
+    background-size: cover;
+    padding: 10px 20px;
+    font-weight: 600;
+    font-size: x-large;
+    color: #fff;
+    height: 100px;
+}
+
+footer .radio-toolbar
+{
+    display: flex;
+    width: 60%;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.radio-toolbar input[type="radio"] 
+{
+    display: none;
+}
+ 
+.radio-toolbar label 
+{
+    display: inline-block;
+    background-color: #30336b;
+    cursor: pointer;
+    padding: 4px 12px;
+    box-shadow: 0px 0px 6px 4px #2f3640;
+}
+
+.radio-toolbar input[type="radio"]:checked+label 
+{
+    background-color: #130f40;
+}
+
+@media screen and (max-width: 730px) 
+{
+    footer
+    {
+        flex-direction: column;
+        justify-content: space-around;
+        height: 120px;
+    }
+
+    footer .radio-toolbar
+    {
+        width: 100%;
+    }
+}

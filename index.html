@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo List App</title>
+    <title>To Do List App</title>
+    <link rel="icon" href="./css.png" />
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
+      integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+    <div class="list">
+        <header>
+          <h2>To Do List App</h2>
+          <div id="deleteAll-btn"><i class="far fa-trash-alt"></i></div>
+        </header>
+        <form id="myForm" autocomplete="off">
+          <div class="groupInputs">
+            <input
+              type="text"
+              placeholder="Enter the task"
+              name="taskDescription"
+              required
+            />
+            <input type="submit" value="Add" />
+          </div>
+        </form>
+        <ul id="taskList"></ul>
+        <footer>
+          <div class="radio-toolbar">
+            <input
+              type="radio"
+              id="radio1"
+              name="radios"
+              onclick="filterTheTasks(this);"
+              checked
+              value="all"
+            />
+            <label for="radio1">All</label>
+  
+            <input
+              type="radio"
+              id="radio2"
+              name="radios"
+              onclick="filterTheTasks(this);"
+              value="completed"
+            />
+            <label for="radio2">Completed</label>
+  
+            <input
+              type="radio"
+              id="radio3"
+              name="radios"
+              onclick="filterTheTasks(this);"
+              value="uncompleted"
+            />
+            <label for="radio3">Uncompleted</label>
+          </div>
+          <div class="numTasks" id="numTasks">All Tasks : 0</div>
+        </footer>
+      </div>
+      <script>
+      
+      const form = document.getElementById("myForm");
+      const taskList = document.getElementById("taskList");
+      const deleteAllBtn = document.getElementById("deleteAll-btn");
+      const numTasks = document.getElementById("numTasks");
+      const allTasks = document.getElementById("radio1");
+      const completedTasks = document.getElementById("radio2");
+      const uncompletedTasks = document.getElementById("radio3");
+
+      let tasks = [];
+
+      function renderTask()
+      {
+        taskList.innerHTML = "";
+        numTasks.innerHTML = "";
+        
+        tasks.forEach((task)=>
+        {
+            const { id, description, completed } = task;
+            const li = document.createElement("li");
+            li.innerHTML = `
+            <label>
+                ${ completed ? '<input type="checkbox" name="" checked />' : '<input type="checkbox" name="" />' }
+                <div class="description">${description}</div>
+                <div class="trash" onclick="removeTask(${id})"><span><i class="far fa-trash-alt"></i></span></div>
+                <div class="tick" onclick="changeTaskStatus(${id})"><span><i class="fas fa-check-circle"></i></span></div>
+            </label>`;
+            taskList.appendChild(li);
+        })
+
+        numTasks.innerHTML = `All Tasks : ${tasks.length}`;
+
+      }
+
+      function filterTasks(tasksFiltered, type) {
+        taskList.innerHTML = "";
+        numTasks.innerHTML = "";
+
+        tasksFiltered.forEach((task, index) => {
+          const { id, description, completed } = task;
+          const listItem = document.createElement("li");
+          listItem.innerHTML = `
+                <label>
+                    ${
+                      completed
+                        ? '<input type="checkbox" name="" checked/>'
+                        : '<input type="checkbox" name="" />'
+                    }
+                    <div class="description">${description}</div>
+                    <div class="trash" onclick="removeTask(${id})"><span><i class="far fa-trash-alt"></i></span></div>
+                    <div class="tick" onclick="changeTaskStatus(${id})"><span><i class="fas fa-check-circle"></i></span></div>
+                </label>`;
+          taskList.appendChild(listItem);
+        });
+        numTasks.innerHTML = `${type} Tasks : ${tasksFiltered.length}`;
+      }
+
+      function filterTheTasks(e) 
+      {
+        if (e.value === "all") {
+          renderTask();
+          return;
+        }
+
+        if (e.value === "completed") {
+          let tasksFiltered = tasks.filter((task) => task.completed === true);
+          filterTasks(tasksFiltered, "Completed");
+        } else if (e.value === "uncompleted") {
+          let tasksFiltered = tasks.filter((task) => task.completed === false);
+          filterTasks(tasksFiltered, "Uncompleted");
+        }
+      }
+
+
+      function removeTask(id)
+      {
+        const task = tasks.find((task) => task.id === id);
+        const index = tasks.indexOf(task);
+        tasks.splice(index, 1);
+        if(completedTasks.checked)
+        {
+            filterTheTasks(completedTasks);
+            return;
+        }
+        else if(uncompletedTasks.checked)
+        {
+            filterTheTasks(uncompletedTasks);
+            return;
+        }
+        else
+        {
+            renderTasks();
+        }
+      }
+
+      function changeTaskStatus(id)
+      {
+        const task = tasks.find((task) => task.id === id);
+        const index = tasks.indexOf(task);
+        tasks[index].completed = !tasks[index].completed;
+      }
+
+      form.addEventListener("submit", (e)=>
+      {
+        e.preventDefault();
+        const taskDescription = form.elements['taskDescription'].value;
+        const task = { id: Date.now(), description: taskDescription, completed: false };
+        tasks.push(task);
+        form.reset();
+        renderTask();
+
+      });
+
+      deleteAllBtn.addEventListener("click", (e)=>
+      {
+        tasks = [];
+        renderTask();
+      })
+
+
+        taskList.addEventListener("scroll", (e)=>
+        {
+            taskList.classList.add("show-scrollbar");
+        })
+
+        taskList.addEventListener("scrollend", (e)=>
+        {
+            taskList.classList.remove("show-scrollbar");
+        })
+        
+      </script>
+</body>
+</html>
